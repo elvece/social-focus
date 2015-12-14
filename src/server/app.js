@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 
-
 // *** routes *** //
 var routes = require('./routes/index.js');
 
@@ -44,7 +43,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 
 // *** error handlers *** //
 
