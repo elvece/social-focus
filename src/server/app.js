@@ -14,6 +14,10 @@ var routes = require('./routes/index.js');
 // *** express instance *** //
 var app = express();
 
+// *** attach socket.io to the app *** //
+var io = require('socket.io')();
+app.io = io;
+require('./socket')(io);
 
 // *** view engine *** //
 var swig = new swig.Swig();
