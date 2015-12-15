@@ -32,16 +32,29 @@ var nextCount;
 //   }
 // })).pipe(nio.log(data));
 
+function seperateStreams(chunk){
+  if(chunk.type = "twitter"){
+    twitterData.push(chunk.count_per_sec);
+  } else {
+    instaData.push(chunk.count_per_sec);
+  }
+}
 
 var svgContainer = d3.select('#visualization').append('svg');
 
 function compareDifference(){
   var diff = nextCount - currentCount;
   currentCount = nextCount;
+  return Math.round(diff);
+}
+
+console.log(compareDifference());
+
+function makeCircles(){
   //if diff is positive, thus an increase
   if (diff > 0){
-    //make circle of how large difference is
+    //make number of circles that is diff number
   } else { //if diff is negative, thus a decrease
-    //remove circle of how large difference is
+    //remove circle of diff number
   }
 }
