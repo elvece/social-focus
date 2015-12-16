@@ -93,18 +93,27 @@ function updateCircles(data){
   //add incoming circles
   circle.enter().append('circle')
     // .attr('r', function(d) { return Math.sqrt(d); })
+    .attr('cy', -10)
     .attr('r', 10);
 
   //remove old
-  circle.exit().remove();
+  circle
+    .exit()
+    .transition()
+    .delay(function(d, i) {
+      return i * 100;
+    })
+    .duration(1000)
+    .attr('cy',-10)
+    .remove()
 
   //set attributes
   circle
     .transition()
-    // .delay(function(d, i) {
-    //   return i * 100;
-    // })
-    .duration(5000)
+    .delay(function(d, i) {
+      return i * 100;
+    })
+    .duration(1000)
     .attr('cy', 60)
     .attr('cx', function(d, i) { return i * 25 + 30; });
 }
