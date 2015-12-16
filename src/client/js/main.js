@@ -74,9 +74,10 @@ function makeCircleArray(){
   }
   //if diff is negative, thus a decrease
   if (diff < 0){
+    var val = Math.abs(diff);
     //whatever diff is, splice off that many items from array
-    console.log('less than 0: '+diff)
-    circleArray.splice(0, diff);
+    console.log('less than 0: '+val)
+    circleArray.splice(0, val);
     console.log('negative: '+circleArray)
   }
   updateCircles(circleArray);
