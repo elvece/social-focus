@@ -33,8 +33,8 @@ function seperateStreams(chunk){
 }
 
 function setStreams(){
-  getDifference(twitterData, twitterDiff);
-  getDifference(instaData, instaDiff);
+  twitterDiff = getDifference(twitterData, twitterDiff);
+  instaDiff = getDifference(instaData, instaDiff);
   makeCircleArray(twitterData, twitterDiff, twitterSvg);
   makeCircleArray(instaData, instaDiff, instaSvg);
   $('#twitter').html('Difference in Twitter counts: '+twitterDiff);
@@ -47,6 +47,7 @@ function getDifference(data, diff){
       currentCount = comparison[0];
   diff = nextCount - currentCount;
   diff = Math.round(diff);
+  return diff;
 }
 
 function makeCircleArray(data, diff, svg){
