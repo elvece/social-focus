@@ -6,8 +6,10 @@ var twitterData = [],
     instaDiff,
     twitterSvg = d3.select('#twitter-bowl'),
     instaSvg = d3.select('#insta-bowl'),
+    twitterColor = '#10347A',
+    instaColor = '#E7AC14',
     //with sample values to start
-    twitterCircleArray = [10, 20, 30];
+    twitterCircleArray = [10, 20, 30],
     instaCircleArray = [10, 20, 30];
 
 ///// *** INITALIZATION ** /////
@@ -35,8 +37,8 @@ function seperateStreams(chunk){
 function setStreams(){
   twitterDiff = getDifference(twitterData, twitterDiff);
   instaDiff = getDifference(instaData, instaDiff);
-  makeCircleArray(twitterData, twitterDiff, twitterSvg);
-  makeCircleArray(instaData, instaDiff, instaSvg);
+  makeCircleArray(twitterData, twitterDiff, twitterSvg, twitterColor);
+  makeCircleArray(instaData, instaDiff, instaSvg, instaColor);
   $('#twitter').html('Difference in Twitter counts: '+twitterDiff);
   $('#insta').html('Difference in Instagram counts: '+instaDiff);
 }
@@ -50,7 +52,7 @@ function getDifference(data, diff){
   return diff;
 }
 
-function makeCircleArray(data, diff, svg){
+function makeCircleArray(data, diff, svg, color){
   //if diff is positive, thus an increase
   if (diff >= 1) {
     console.log('greater or equal to 1: '+diff);
@@ -70,10 +72,10 @@ function makeCircleArray(data, diff, svg){
     data.splice(0, val);
     console.log('negative: '+data);
   }
-  updateCircles(data, svg);
+  updateCircles(data, svg, color);
 }
 
-function updateCircles(data, svg){
+function updateCircles(data, svg, color){
   //compute data join, returns the update selection
   var circle = svg.selectAll('circle')
     .data(data);
@@ -102,6 +104,7 @@ function updateCircles(data, svg){
       return i * 100;
     })
     .duration(1000)
+    .attr('fill', color)
     .attr('cy', 60)
     .attr('cx', function(d, i) { return i * 25 + 30; });
 }
