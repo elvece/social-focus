@@ -10,3 +10,7 @@ a {
 svg {
   border: 1px solid black;
 }
+
+.center {
+  text-align: center;
+}
