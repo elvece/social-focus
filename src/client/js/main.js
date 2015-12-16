@@ -25,7 +25,7 @@ function init(){
     getDifference();
     makeCircleArray();
     // console.log(diff)
-    $('#twitter').html(diff);
+    $('#twitter').html('Difference in Twitter counts: '+diff);
   }
 }
 
@@ -59,7 +59,7 @@ function getDifference(){
 }
 
 
-var circleArray = [];
+var circleArray = [10, 20, 30];
 
 function makeCircleArray(){
   //if diff is positive, thus an increase
@@ -67,6 +67,7 @@ function makeCircleArray(){
     console.log('greater or equal to 1: '+diff)
     //adds a number for circle to array
     for (var i = 0; i < diff; i++) {
+      //needs to not produce 0
       var num = Math.floor(Math.random() * 10);
       circleArray.push(num);
       console.log('positive: '+circleArray)
@@ -86,24 +87,26 @@ function makeCircleArray(){
 function updateCircles(data){
 
   //compute data join, returns the update selection
-  var circle = svg.selectAll("circle")
+  var circle = svg.selectAll('circle')
     .data(data);
 
   //add incoming circles
-  circle.enter().append("circle")
-    .attr("r", function(d) { return Math.sqrt(d); });
-
-  //enter and update
-  // circle.circle(function(d){return d;});
+  circle.enter().append('circle')
+    // .attr('r', function(d) { return Math.sqrt(d); })
+    .attr('r', 10);
 
   //remove old
-  circle.exit().remove()
+  circle.exit().remove();
 
   //set attributes
   circle
-    .attr("cy", 60)
-    .attr("cx", function(d, i) { return i * 10 + 30; });
-
+    .transition()
+    // .delay(function(d, i) {
+    //   return i * 100;
+    // })
+    .duration(5000)
+    .attr('cy', 60)
+    .attr('cx', function(d, i) { return i * 25 + 30; });
 }
 
 
