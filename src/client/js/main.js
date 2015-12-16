@@ -1,43 +1,34 @@
 window.init = function(){
 
-  var twitterData = [],
-      instaData = [],
-      twitterDiff,
-      instaDiff,
-      twitterSvg = d3.select('#twitter-bowl'),
-      instaSvg = d3.select('#insta-bowl'),
-      twitterColor = '#10347A',
-      instaColor = '#E7AC14',
-      twitterCircleArray = [],
-      instaCircleArray = [];
+  var services = {},
+      colors = { 'instagram': '#10347A', 'twitter': '#E7AC14', 'negative': 'red'};
 
   function start(){
     nio.source.socketio(
     'http://brand.nioinstances.com',
     ['count_by_network']
     ).pipe(nio.func(seperateStreams));
-    if (twitterData.length >= 2 && instaData.length >= 2){
+    // if (twitterData.length >= 2 && instaData.length >= 2){}
       setStreams();
-    }
   }
 
   function seperateStreams(chunk){
-    if(chunk.type === "twitter"){
-      twitterData.push(chunk.count_per_sec);
+    if (!services[chunk.type]){
+      services[chunk.type] = {data: [chunk.count_per_sec], color: colors[chunk.type] , diff: 0, circles: [] };
     } else {
-      instaData.push(chunk.count_per_sec);
+      services[chunk.type].data.push(chunk.count_per_sec);
     }
   }
 
   function setStreams(){
-    twitterDiff = getDifference(twitterData, twitterDiff);
-    instaDiff = getDifference(instaData, instaDiff);
-    makeCircleArray(twitterData, twitterDiff, twitterSvg, twitterColor);
-    makeCircleArray(instaData, instaDiff, instaSvg, instaColor);
-
-    //not working correctly?
-    $('#twitter').html('Difference in Twitter counts: '+twitterDiff);
-    $('#insta').html('Difference in Instagram counts: '+instaDiff);
+    Object.keys(services).forEach(function(key){
+      var service = services[key];
+      service.diff = getDifference(service.data, service.diff);
+      var svg = d3.select('#'+key+'-bowl');
+      makeCircleArray(service.circles, service.diff, svg, service.color);
+      $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
+      // console.log(service);
+    });
   }
 
   function getDifference(data, diff){
@@ -51,7 +42,6 @@ window.init = function(){
 
   function makeCircleArray(data, diff, svg, color){
     if (diff >= 1) {
-      console.log('greater or equal to 1: '+diff);
       for (var i = 0; i < diff; i++) {
         //needs to not produce 0
         var num = Math.floor(Math.random() * 10);
@@ -60,7 +50,6 @@ window.init = function(){
     }
     if (diff < 0){
       var val = Math.abs(diff);
-      console.log('less than 0: '+val);
       data.splice(0, val);
     }
     updateCircles(data, svg, color);
@@ -98,6 +87,7 @@ window.init = function(){
       .attr('cy', 100)
       .attr('cx', function(d, i) { return i * 25 + 30; });
   }
+
 
   setInterval(start, 1000);
 };
