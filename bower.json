@@ -1,5 +1,5 @@
 {
-  "name": "nio-challenge",
+  "name": "social-focus",
   "version": "0.0.0",
   "authors": [
     "elvece <lvcifferello@gmail.com>"
@@ -9,7 +9,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "./src/client/bower_components/",
+    "./client/bower_components/",
     "test",
     "tests"
   ],
