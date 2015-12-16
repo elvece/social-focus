@@ -17,7 +17,8 @@ window.init = function(){
         data: [chunk.count_per_sec],
         color: colors[chunk.type] ,
         diff: 0,
-        circles: [] };
+        circles: []
+      };
     } else {
       services[chunk.type].data.push(chunk.count_per_sec);
     }
@@ -25,18 +26,24 @@ window.init = function(){
 
   function setStreams(){
     Object.keys(services).forEach(function(key){
-      var service = services[key];
-      service.diff = getDifference(service.data, service.diff);
-      var svg = d3.select('#'+key+'-bowl');
-      window.constructCircles(service.circles, service.diff, svg, service.color);
+      var service = services[key],
+          svg = d3.select('#'+key+'-bowl');
+
+      service.diff = getDifference(service.data);
+
+      window.constructCircles.makeLine(svg);
+
+      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
+
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
   }
 
-  function getDifference(data, diff){
+  function getDifference(data){
     var comparison = data.splice(0,2),
         nextCount = comparison[1],
-        currentCount = comparison[0];
+        currentCount = comparison[0],
+        diff;
     diff = nextCount - currentCount;
     diff = Math.round(diff);
     return diff;

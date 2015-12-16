@@ -1,7 +1,7 @@
 window.constructCircles = (function () {
 
   function makeCircleArray(data, diff, svg, color){
-    if (diff >= 1) {
+    if (diff >= 0.1) {//think about what this value should be
       for (var i = 0; i < diff; i++) {
         //can be any number, just need a value to generate circle
         data.push(10);
@@ -47,5 +47,20 @@ window.constructCircles = (function () {
       .attr('cx', function(d, i) { return i * 25 + 30; });
   }
 
-  return makeCircleArray;
+  function makeLine(svg){
+    svg.append('line')
+      .attr('y1', 50)
+      .attr('y2', 150)
+      .attr('x1', 450)
+      .attr('x2', 450)
+      .attr('stroke', 'black')
+      .attr('stroke-width', '2')
+      .transition()
+      .duration(1000);
+  }
+
+  return {
+    makeCircleArray: makeCircleArray,
+    makeLine: makeLine
+  };
 })();
