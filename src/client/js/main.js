@@ -1,13 +1,16 @@
 
-// *** GLOBALS *** //
-var twitterData = [];
-var instaData = [];
-var currentCount;
-var nextCount;
-var diff;
-var svg = d3.select('svg');
+///// *** GLOBALS *** /////
+var twitterData = [],
+    instaData = [],
+    twitterDiff,
+    instaDiff,
+    twitterSvg = d3.select('#twitter-bowl'),
+    instaSvg = d3.select('#insta-bowl'),
+    //with sample values to start
+    twitterCircleArray = [10, 20, 30];
+    instaCircleArray = [10, 20, 30];
 
-//initaliztion of stream and action functions
+///// *** INITALIZATION ** /////
 window.setInterval(init, 1000);
 
 function init(){
@@ -15,15 +18,12 @@ function init(){
   'http://brand.nioinstances.com',
   ['count_by_network']
   ).pipe(nio.func(seperateStreams));
-  if (twitterData.length > 2){
-    getDifference();
-    makeCircleArray();
-    $('#twitter').html('Difference in Twitter counts: '+diff);
-    $('#insta').html('Difference in Instagram counts: '+diff);
+  if (twitterData.length >= 2 && instaData.length >= 2){
+    setStreams();
   }
 }
 
-// *** HELPER FUNCTIONS ** //
+///// *** HELPER FUNCTIONS ** /////
 function seperateStreams(chunk){
   if(chunk.type === "twitter"){
     twitterData.push(chunk.count_per_sec);
@@ -32,41 +32,47 @@ function seperateStreams(chunk){
   }
 }
 
-function getDifference(data){
-  var comparison = data.splice(0,2);
-  nextCount = comparison[1];
-  currentCount = comparison[0];
+function setStreams(){
+  getDifference(twitterData, twitterDiff);
+  getDifference(instaData, instaDiff);
+  makeCircleArray(twitterData, twitterDiff, twitterSvg);
+  makeCircleArray(instaData, instaDiff, instaSvg);
+  $('#twitter').html('Difference in Twitter counts: '+twitterDiff);
+  $('#insta').html('Difference in Instagram counts: '+instaDiff);
+}
+
+function getDifference(data, diff){
+  var comparison = data.splice(0,2),
+      nextCount = comparison[1],
+      currentCount = comparison[0];
   diff = nextCount - currentCount;
   diff = Math.round(diff);
 }
 
-//with sample values to start
-var circleArray = [10, 20, 30];
-
-function makeCircleArray(){
+function makeCircleArray(data, diff, svg){
   //if diff is positive, thus an increase
   if (diff >= 1) {
-    console.log('greater or equal to 1: '+diff)
+    console.log('greater or equal to 1: '+diff);
     //adds a number for circle to array
     for (var i = 0; i < diff; i++) {
       //needs to not produce 0
       var num = Math.floor(Math.random() * 10);
-      circleArray.push(num);
-      console.log('positive: '+circleArray)
+      data.push(num);
+      console.log('positive: '+data);
     }
   }
   //if diff is negative, thus a decrease
   if (diff < 0){
     var val = Math.abs(diff);
     //whatever diff is, splice off that many items from array
-    console.log('less than 0: '+val)
-    circleArray.splice(0, val);
-    console.log('negative: '+circleArray)
+    console.log('less than 0: '+val);
+    data.splice(0, val);
+    console.log('negative: '+data);
   }
-  updateCircles(circleArray);
+  updateCircles(data, svg);
 }
 
-function updateCircles(data){
+function updateCircles(data, svg){
   //compute data join, returns the update selection
   var circle = svg.selectAll('circle')
     .data(data);
