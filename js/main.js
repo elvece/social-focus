@@ -19,7 +19,8 @@ window.init = function(){
         data: [chunk.count_per_sec],
         color: colors[chunk.type] ,
         diff: 0,
-        circles: []
+        posCircles: [],
+        negCircles: []
       };
     } else {
       services[chunk.type].data.push(chunk.count_per_sec);
@@ -32,7 +33,8 @@ window.init = function(){
           svg = d3.select('#'+key+'-bowl'),
           location = '#'+key+'-pulse';
       service.diff = getDifference(service.data, key);
-      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
+      window.constructVisual.makeLine(svg);
+      window.constructVisual.makeCircleArrays(service.posCircles, service.negCircles, service.diff, svg, service.color, service.negColor, key);
       $('#'+key+'-diff').html(service.diff);
       if (service.data.length > 0){
         window.constructCircles.generatePulse(location);
