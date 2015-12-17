@@ -47,7 +47,38 @@ window.constructCircles = (function () {
       .attr('cx', function(d, i) { return i * 25 + 30; });
   }
 
+  function generatePulse(location){
+    var d3 = require('d3'),
+        y = d3.scale.ordinal().domain(d3.range(1)).rangePoints([0, 0]),
+        svg = d3.select(location);
+    svg.selectAll('circle')
+      .data(y.domain())
+      .enter()
+      .append('circle')
+      .attr('stroke-width', 20)
+      .attr('r', 10)
+      .attr('cx', 50)
+      .attr('cy', 50)
+      .each(pulse);
+
+    function pulse() {
+      var circle = svg.select('circle');
+      (function repeat() {
+        circle = circle.transition()
+          .duration(2000)
+          .attr('stroke-width', 20)
+          .attr('r', 10)
+          .transition()
+          .duration(2000)
+          .attr('stroke-width', 0.25)
+          .attr('r', 50)
+          .ease('sine')
+          .each('end', repeat);
+      })();
+    }
+  }
   return {
     makeCircleArray: makeCircleArray,
+    generatePulse: generatePulse
   };
 })();

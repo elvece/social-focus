@@ -36,3 +36,11 @@ img {
   font-size: 3em;
   opacity: 0.5;
 }
+
+.pulse {
+  height: 100px;
+  width: 100px;
+  border: none;
+  stroke: #6A6A6A;
+  fill: none;
+}

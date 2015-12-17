@@ -48,12 +48,43 @@ window.constructCircles = (function () {
       .attr('cx', function(d, i) { return i * 25 + 30; });
   }
 
+  function generatePulse(location){
+    var d3 = require('d3'),
+        y = d3.scale.ordinal().domain(d3.range(1)).rangePoints([0, 0]),
+        svg = d3.select(location);
+    svg.selectAll('circle')
+      .data(y.domain())
+      .enter()
+      .append('circle')
+      .attr('stroke-width', 20)
+      .attr('r', 10)
+      .attr('cx', 50)
+      .attr('cy', 50)
+      .each(pulse);
+
+    function pulse() {
+      var circle = svg.select('circle');
+      (function repeat() {
+        circle = circle.transition()
+          .duration(2000)
+          .attr('stroke-width', 20)
+          .attr('r', 10)
+          .transition()
+          .duration(2000)
+          .attr('stroke-width', 0.25)
+          .attr('r', 50)
+          .ease('sine')
+          .each('end', repeat);
+      })();
+    }
+  }
   return {
     makeCircleArray: makeCircleArray,
+    generatePulse: generatePulse
   };
 })();
 
-},{}],2:[function(require,module,exports){
+},{"d3":4}],2:[function(require,module,exports){
 $(document).on('ready', function(){
   window.init();
 });
@@ -90,10 +121,14 @@ window.init = function(){
   function setStreams(){
     Object.keys(services).forEach(function(key){
       var service = services[key],
-          svg = d3.select('#'+key+'-bowl');
+          svg = d3.select('#'+key+'-bowl'),
+          location = '#'+key+'-pulse';
       service.diff = getDifference(service.data, key);
       window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
       $('#'+key+'-diff').html(service.diff);
+      if (service.data.length > 0){
+        window.constructCircles.generatePulse(location);
+      }
     });
   }
 

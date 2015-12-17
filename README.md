@@ -7,5 +7,5 @@ The purpose of this application is to produce a quick visual analysis of trends 
 [View Live](http://elvece.github.io/social-focus/)
 
 
-### Refactor:
+### Refactor
 I am currently refactoring the visual display to portray a scale range, which will depict the flow of positive and negative data trends in real time.
