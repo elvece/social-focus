@@ -31,12 +31,12 @@ window.init = function(){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl'),
           location = '#'+key+'-pulse';
-      service.diff = getDifference(service.data, key);
-      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
-      $('#'+key+'-diff').html(service.diff);
       if (service.data.length > 0){
         window.constructCircles.generatePulse(location);
       }
+      service.diff = getDifference(service.data, key);
+      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
+      $('#'+key+'-diff').html(service.diff);
     });
   }
 

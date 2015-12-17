@@ -1,7 +1,6 @@
 window.constructCircles = (function () {
 
   function makeCircleArray(data, diff, svg, color){
-    console.log(data)
     if (diff >= 0.1) {
       for (var i = 0; i < diff; i++) {
         data.push(10);

@@ -2,7 +2,6 @@
 window.constructCircles = (function () {
 
   function makeCircleArray(data, diff, svg, color){
-    console.log(data)
     if (diff >= 0.1) {
       for (var i = 0; i < diff; i++) {
         data.push(10);
@@ -123,12 +122,12 @@ window.init = function(){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl'),
           location = '#'+key+'-pulse';
-      service.diff = getDifference(service.data, key);
-      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
-      $('#'+key+'-diff').html(service.diff);
       if (service.data.length > 0){
         window.constructCircles.generatePulse(location);
       }
+      service.diff = getDifference(service.data, key);
+      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
+      $('#'+key+'-diff').html(service.diff);
     });
   }
 
