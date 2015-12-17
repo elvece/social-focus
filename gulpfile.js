@@ -79,7 +79,7 @@ gulp.task('browserify', function() {
   return browserify(files)
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./js/'));
+    .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('browserify-watch', ['browserify'], browserSync.reload);
