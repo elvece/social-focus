@@ -7,9 +7,9 @@ window.constructVisual = (function () {
     }
   }
 
-  function makeCircleArrays(pos, neg, diff, svg, color, negColor){
-    console.log('ARE YOU WOKRING WTF')
-    console.log('diff: '+diff)
+  function makeCircleArrays(pos, neg, diff, svg, color, negColor, service){
+    console.log('service: '+service)
+    console.log('diff: '+diff);
     var n = neg.length,
         p = pos.length,
         val = Math.abs(diff),
@@ -43,8 +43,8 @@ window.constructVisual = (function () {
         loop(neg, diff);
       }
     }
-    console.log('pos: '+pos)
-    console.log('neg: '+neg)
+    console.log('pos: '+ pos);
+    console.log('neg: '+neg);
     updatePositiveCircles(pos, svg, color);
     updateNegativeCircles(neg, svg, negColor);
   }

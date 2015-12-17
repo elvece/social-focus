@@ -74,9 +74,7 @@ gulp.task('minify-js', function() {
 gulp.task('browserify', function() {
   var files = ['./js/d3.js', './js/main.js', './js/init.js'];
   var bundler = browserify(files);
-
   watchify(bundler);
-
   var rebundle = function(){
     return bundler.bundle()
       .pipe(source('bundle.js'))
@@ -85,7 +83,6 @@ gulp.task('browserify', function() {
   bundler.on('update', rebundle);
   return rebundle();
 });
-
 
 gulp.task('browser-sync', function() {
   browserSync.init({
@@ -104,7 +101,7 @@ gulp.task('watch', function() {
 });
 
 // *** default task *** //
-gulp.task('default', ['browser-sync', 'watch', 'sass:watch', 'browserify'], function(){});
+gulp.task('default', ['browser-sync', 'watch', 'sass:watch', 'browserify', 'reload-js'], function(){});
 
 // *** build task *** //
 gulp.task('build', function() {

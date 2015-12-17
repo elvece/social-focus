@@ -8,9 +8,9 @@ window.constructVisual = (function () {
     }
   }
 
-  function makeCircleArrays(pos, neg, diff, svg, color, negColor){
-    console.log('ARE YOU WOKRING WTF')
-    console.log('diff: '+diff)
+  function makeCircleArrays(pos, neg, diff, svg, color, negColor, service){
+    console.log('service: '+service)
+    console.log('diff: '+diff);
     var n = neg.length,
         p = pos.length,
         val = Math.abs(diff),
@@ -44,8 +44,8 @@ window.constructVisual = (function () {
         loop(neg, diff);
       }
     }
-    console.log('pos: '+pos)
-    console.log('neg: '+neg)
+    console.log('pos: '+ pos);
+    console.log('neg: '+neg);
     updatePositiveCircles(pos, svg, color);
     updateNegativeCircles(neg, svg, negColor);
   }
@@ -178,14 +178,13 @@ window.init = function(){
           svg = d3.select('#'+key+'-bowl');
       service.diff = getDifference(service.data);
       window.constructVisual.makeLine(svg);
-
-      window.constructVisual.makeCircleArrays(service.posCircles, service.negCircles, service.diff, svg, service.color, service.negColor);
-
+      window.constructVisual.makeCircleArrays(service.posCircles, service.negCircles, service.diff, svg, service.color, service.negColor, key);
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
   }
 
   function getDifference(data){
+    //in here set a dom element to prev count as current count and next count as current count
     var comparison = data.splice(0,2),
         nextCount = comparison[1],
         currentCount = comparison[0],
@@ -195,7 +194,7 @@ window.init = function(){
     return diff;
   }
 
-  setInterval(start, 2000);
+  setInterval(start, 1000);
 };
 
 },{"d3":4,"niojs":9}],4:[function(require,module,exports){
