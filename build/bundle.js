@@ -1,91 +1,20 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-window.constructVisual = (function () {
+window.constructCircles = (function () {
 
-  function loop(arr, num){
-    for (var i = 0; i < num; i++) {
-      //push any num, circle needs a data value
-      arr.push(10);
-    }
-  }
-
-  function makeCircleArrays(pos, neg, diff, svg, color, negColor, service){
-    console.log('service: '+service)
-    console.log('diff: '+diff);
-    var n = neg.length,
-        p = pos.length,
-        val = Math.abs(diff),
-        num1 = diff - n,
-        num2 = val - p;
-    if (diff >= 1) {
-      if (n > 0){
-        if(n - diff > 0){
-          neg.splice(0, diff);
-        }
-        if (diff > n){
-          neg.splice(0, n);
-          loop(pos, num1);
-        }
-      } else {
-        loop(pos, diff);
+  function makeCircleArray(data, diff, svg, color){
+    if (diff >= 0.1) {
+      for (var i = 0; i < diff; i++) {
+        data.push(10);
       }
     }
     if (diff < 0){
-      if (p > 0){
-        //case for manipulating differences only on positive side
-        if(p - val > 0){
-          pos.splice(0, val);
-        }
-        //case for if difference is greater than the total number of items in the positive side
-        if (val > p){
-          pos.splice(0, p);
-          loop(neg, num2);
-        }
-      } else {
-        loop(neg, diff);
-      }
+      var val = Math.abs(diff);
+      data.splice(0, val);
     }
-    console.log('pos: '+ pos);
-    console.log('neg: '+neg);
-    updatePositiveCircles(pos, svg, color);
-    updateNegativeCircles(neg, svg, negColor);
+    updateCircles(data, svg, color);
   }
 
-  //need to have one function for positive side and another for negative side
-
-  function updatePositiveCircles(data, svg, color){
-     //compute data join
-    var circle = svg.selectAll('circle')
-      .data(data);
-
-    //add incoming circles
-    circle.enter().append('circle')
-      .attr('cy', -10)
-      .attr('r', 10);
-
-    //remove old
-    circle
-      .exit()
-      .transition()
-      .delay(function(d, i) {
-        return i * 100;
-      })
-      .duration(1000)
-      .attr('cy',-10)
-      .remove();
-
-    //set attributes
-    circle
-      .transition()
-      .delay(function(d, i) {
-        return i * 100;
-      })
-      .duration(1000)
-      .attr('fill', color)
-      .attr('cy', 100)
-      .attr('cx', function(d, i) { return i * 25 + 470; });
-  }
-
-  function updateNegativeCircles(data, svg, color){
+  function updateCircles(data, svg, color){
     //compute data join
     var circle = svg.selectAll('circle')
       .data(data);
@@ -115,24 +44,11 @@ window.constructVisual = (function () {
       .duration(1000)
       .attr('fill', color)
       .attr('cy', 100)
-      .attr('cx', function(d, i) { return i * 25 + 350; });
-  }
-
-  function makeLine(svg){
-    svg.append('line')
-      .attr('y1', 50)
-      .attr('y2', 150)
-      .attr('x1', 450)
-      .attr('x2', 450)
-      .attr('stroke', 'black')
-      .attr('stroke-width', '2')
-      .transition()
-      .duration(1000);
+      .attr('cx', function(d, i) { return i * 25 + 30; });
   }
 
   return {
-    makeCircleArrays: makeCircleArrays,
-    makeLine: makeLine
+    makeCircleArray: makeCircleArray,
   };
 })();
 
@@ -161,11 +77,9 @@ window.init = function(){
     if (!services[chunk.type]){
       services[chunk.type] = {
         data: [chunk.count_per_sec],
-        color: colors[chunk.type],
-        negColor: colors['negative'],
+        color: colors[chunk.type] ,
         diff: 0,
-        posCircles: [],
-        negCircles: []
+        circles: []
       };
     } else {
       services[chunk.type].data.push(chunk.count_per_sec);
@@ -177,14 +91,12 @@ window.init = function(){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl');
       service.diff = getDifference(service.data);
-      window.constructVisual.makeLine(svg);
-      window.constructVisual.makeCircleArrays(service.posCircles, service.negCircles, service.diff, svg, service.color, service.negColor, key);
+      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
   }
 
   function getDifference(data){
-    //in here set a dom element to prev count as current count and next count as current count
     var comparison = data.splice(0,2),
         nextCount = comparison[1],
         currentCount = comparison[0],

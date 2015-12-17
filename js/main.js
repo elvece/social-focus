@@ -17,11 +17,9 @@ window.init = function(){
     if (!services[chunk.type]){
       services[chunk.type] = {
         data: [chunk.count_per_sec],
-        color: colors[chunk.type],
-        negColor: colors['negative'],
+        color: colors[chunk.type] ,
         diff: 0,
-        posCircles: [],
-        negCircles: []
+        circles: []
       };
     } else {
       services[chunk.type].data.push(chunk.count_per_sec);
@@ -33,14 +31,12 @@ window.init = function(){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl');
       service.diff = getDifference(service.data);
-      window.constructVisual.makeLine(svg);
-      window.constructVisual.makeCircleArrays(service.posCircles, service.negCircles, service.diff, svg, service.color, service.negColor, key);
+      window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
   }
 
   function getDifference(data){
-    //in here set a dom element to prev count as current count and next count as current count
     var comparison = data.splice(0,2),
         nextCount = comparison[1],
         currentCount = comparison[0],
