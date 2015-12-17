@@ -1,6 +1,8 @@
 window.init = function(){
 
-  var services = {},
+  var nio = require('niojs'),
+      d3 = require('d3'),
+      services = {},
       colors = { 'instagram': '#10347A', 'twitter': '#E7AC14', 'negative': 'darkred'};
 
   function start(){
