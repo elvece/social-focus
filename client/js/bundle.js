@@ -2,9 +2,8 @@
 window.constructCircles = (function () {
 
   function makeCircleArray(data, diff, svg, color){
-    if (diff >= 0.1) {//think about what this value should be
+    if (diff >= 0.1) {
       for (var i = 0; i < diff; i++) {
-        //can be any number, just need a value to generate circle
         data.push(10);
       }
     }
@@ -16,7 +15,7 @@ window.constructCircles = (function () {
   }
 
   function updateCircles(data, svg, color){
-    //compute data join, returns the update selection
+    //compute data join
     var circle = svg.selectAll('circle')
       .data(data);
 
@@ -104,13 +103,9 @@ window.init = function(){
     Object.keys(services).forEach(function(key){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl');
-
       service.diff = getDifference(service.data);
-
       window.constructCircles.makeLine(svg);
-
       window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
-
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
   }
