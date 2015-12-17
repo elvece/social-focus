@@ -1,9 +1,8 @@
 window.constructCircles = (function () {
 
   function makeCircleArray(data, diff, svg, color){
-    if (diff >= 0.1) {//think about what this value should be
+    if (diff >= 0.1) {
       for (var i = 0; i < diff; i++) {
-        //can be any number, just need a value to generate circle
         data.push(10);
       }
     }
@@ -15,7 +14,7 @@ window.constructCircles = (function () {
   }
 
   function updateCircles(data, svg, color){
-    //compute data join, returns the update selection
+    //compute data join
     var circle = svg.selectAll('circle')
       .data(data);
 
