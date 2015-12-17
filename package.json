@@ -2,15 +2,34 @@
   "name": "social-focus",
   "version": "1.0.0",
   "description": "visualization of live data stream",
-  "main": "init.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "lucy cifferello",
+  "repository": "https://github.com/elvece/social-focus",
   "license": "ISC",
   "dependencies": {
-    "browserify": "^12.0.1",
     "d3": "^3.5.11",
     "niojs": "^1.1.5"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.10.0",
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-livereload": "^3.8.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-notify": "^2.2.0",
+    "gulp-sass": "^2.1.0",
+    "gulp-uglify": "^1.5.1",
+    "jshint-stylish": "^2.0.1",
+    "run-sequence": "^1.1.4",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
   }
 }

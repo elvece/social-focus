@@ -47,21 +47,8 @@ window.constructCircles = (function () {
       .attr('cx', function(d, i) { return i * 25 + 30; });
   }
 
-  function makeLine(svg){
-    svg.append('line')
-      .attr('y1', 50)
-      .attr('y2', 150)
-      .attr('x1', 450)
-      .attr('x2', 450)
-      .attr('stroke', 'black')
-      .attr('stroke-width', '2')
-      .transition()
-      .duration(1000);
-  }
-
   return {
     makeCircleArray: makeCircleArray,
-    makeLine: makeLine
   };
 })();
 
@@ -104,7 +91,6 @@ window.init = function(){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl');
       service.diff = getDifference(service.data);
-      window.constructCircles.makeLine(svg);
       window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
       $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
     });
