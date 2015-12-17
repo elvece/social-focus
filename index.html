@@ -7,30 +7,41 @@
     <link rel="stylesheet" href="./styles/css/main.css">
   </head>
   <body>
-    <div class="container">
 
       <h1>Social Focus</h1><br>
       <h5>By creating a visual representation of live information from social media sites, users can gain amore streamlined understanding of how their social presence is currently trending.</h5><br>
       <h6>This display calculates the difference between posts per second and accordingly adds or removes chunks from the view.</h6><br>
 
-      <svg id="twitter-bowl" width="900" height="200"></svg>
-      <div id="twitter"></div>
-
-      <svg id="instagram-bowl" width="900" height="200"></svg>
-      <div id="instagram"></div>
-
-    </div>
-
-  <!--     <div class="row">
-        <div class="col-sm-12 col-md-6 center">
-          <svg id="twitter-bowl" width="900" height="600"></svg>
-          <div id="twitter"></div>
+      <div class="row">
+        <div class="col-md-1 pad">
+          <img src="./img/twitter.png">
         </div>
-        <div class="col-sm-12 col-md-6 center">
-          <svg id="insta-bowl" width="900" height="600"></svg>
-          <div id="insta"></div>
+        <div class="col-md-8">
+          <svg id="twitter-bowl" width="900" height="200"></svg>
         </div>
-      </div> -->
+        <div class="col-md-1 center ">
+         <p class="description">difference <div id="twitter-diff" class="number"></div></p>
+        </div>
+        <div class="col-md-2 center">
+         <p class="description">current count <div id="twitter-count" class="number"></div></p>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-1 pad">
+          <img src="./img/insta.png">
+        </div>
+        <div class="col-md-8">
+          <svg id="instagram-bowl" width="900" height="200"></svg>
+        </div>
+        <div class="col-md-1 center ">
+         <p class="description">difference <div id="instagram-diff" class="number"></div></p>
+        </div>
+        <div class="col-md-2 center">
+         <p class="description">current count <div id="instagram-count" class="number"></div></p>
+        </div>
+      </div>
+
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./build/bundle.js"></script>

@@ -8,9 +8,29 @@ a {
 }
 
 svg {
-  border: 1px solid black;
+  border: 1px dotted black;
 }
 
 .center {
   text-align: center;
+}
+
+img {
+  height: 100px;
+  width: 100px;
+}
+
+.pad {
+  padding-top: 3em;
+}
+
+.description{
+  font-size: 1.2em;
+  /*font-style: italic;*/
+  font-variant: small-caps;
+}
+
+.number {
+  font-size: 3em;
+  opacity: 0.5;
 }

@@ -3,7 +3,7 @@ window.init = function(){
   var nio = require('niojs'),
       d3 = require('d3'),
       services = {},
-      colors = { 'instagram': '#10347A', 'twitter': '#E7AC14', 'negative': 'darkred'};
+      colors = { 'instagram': '#E7AC14', 'twitter': '#10347A', 'negative': 'darkred'};
 
   function start(){
     nio.source.socketio(
@@ -30,19 +30,20 @@ window.init = function(){
     Object.keys(services).forEach(function(key){
       var service = services[key],
           svg = d3.select('#'+key+'-bowl');
-      service.diff = getDifference(service.data);
+      service.diff = getDifference(service.data, key);
       window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
-      $('#'+key).html('Difference in '+key+ ' counts: '+service.diff);
+      $('#'+key+'-diff').html(service.diff);
     });
   }
 
-  function getDifference(data){
+  function getDifference(data, key){
     var comparison = data.splice(0,2),
         nextCount = comparison[1],
         currentCount = comparison[0],
         diff;
     diff = nextCount - currentCount;
     diff = Math.round(diff);
+    $('#'+key+'-count').html(Math.round(currentCount));
     return diff;
   }
 
