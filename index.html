@@ -4,46 +4,54 @@
     <meta charset="utf-8">
     <title>Social Focus</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="./styles/css/main.css">
   </head>
   <body>
 
-      <h1>Social Focus</h1><br>
-      <h5>By creating a visual representation of live information from social media sites, users can gain amore streamlined understanding of how their social presence is currently trending.</h5><br>
-      <h6>This display calculates the difference between posts per second and accordingly adds or removes chunks from the view.</h6><br>
+      <div class="row center info">
+        <div class="col-sm-12 col-md-4 col-md-offset-4">
+          <h1><strong>S o c i a l &nbsp;&nbsp; F o c u s</strong></h1>
+          <br>
+          <h4>By creating a visual representation of current information from social media sites, users can gain a more streamlined understanding of how their social presence is currently trending.</h4>
+          <br>
+          <p><em>This display calculates the difference between posts per second, denotes the current post count va;ue, and updates the view accordingly.</em></p>
+        </div>
+      </div>
+      <br>
 
       <div class="row">
-        <div class="col-md-1 pad">
+        <div class="col-sm-12 col-md-1 pad center">
           <img src="./img/twitter.png">
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-12 col-md-8">
           <svg id="twitter-bowl" width="900" height="200"></svg>
         </div>
-        <div class="col-md-1 center ">
+        <div class="col-sm-12 col-md-1 center">
          <p class="description">difference <div id="twitter-diff" class="number"></div></p>
         </div>
-        <div class="col-md-2 center">
+        <div class="col-sm-12 col-md-2 center">
          <p class="description">current count <div id="twitter-count" class="number"></div></p>
         </div>
       </div>
       <br>
       <div class="row">
-        <div class="col-md-1 pad">
+        <div class="col-sm-12 col-md-1 pad center">
           <img src="./img/insta.png">
         </div>
-        <div class="col-md-8">
+        <div class="col-sm-12 col-md-8">
           <svg id="instagram-bowl" width="900" height="200"></svg>
         </div>
-        <div class="col-md-1 center ">
+        <div class="col-sm-12 col-md-1 center ">
          <p class="description">difference <div id="instagram-diff" class="number"></div></p>
         </div>
-        <div class="col-md-2 center">
+        <div class="col-sm-12 col-md-2 center">
          <p class="description">current count <div id="instagram-count" class="number"></div></p>
         </div>
       </div>
 
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./build/bundle.js"></script>
   </body>
 </html>
