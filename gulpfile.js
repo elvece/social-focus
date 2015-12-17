@@ -3,18 +3,19 @@
  */
 
 var gulp = require('gulp');
+var watchify = require('watchify');
 var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 var connect = require('gulp-connect');
-var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
-var source = require('vinyl-source-stream');
 
 /**
  * Config
@@ -52,10 +53,6 @@ gulp.task('sass:watch', function () {
   gulp.watch(paths.sass, ['styles']);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['lint']);
-});
-
 gulp.task('clean', function() {
   gulp.src('./dist/*')
     .pipe(clean({force: true}));
@@ -76,13 +73,19 @@ gulp.task('minify-js', function() {
 
 gulp.task('browserify', function() {
   var files = ['./js/d3.js', './js/main.js', './js/init.js'];
-  return browserify(files)
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./build/'));
+  var bundler = browserify(files);
+  if (watch){
+    watchify(bundler);
+  }
+  var rebundle = function(){
+    return bundler.bundle()
+      .pipe(source(bundle.js))
+      .pipe(gulp.dest('./build/'));
+  };
+  bundler.on('update', rebundle);
+  return rebundle();
 });
 
-gulp.task('browserify-watch', ['browserify'], browserSync.reload);
 
 gulp.task('browser-sync', function() {
   browserSync.init({
@@ -92,7 +95,13 @@ gulp.task('browser-sync', function() {
   });
 });
 
-gulp.watch(paths.scripts).on('change', browserSync.reload);
+gulp.task('reload-js', ['browserify'], function(){
+  browserSync.reload();
+});
+
+gulp.task('watch', function() {
+  gulp.watch(paths.scripts, ['lint', 'reload-js']);
+});
 
 // *** default task *** //
 gulp.task('default', ['browser-sync', 'watch', 'sass:watch', 'browserify'], function(){});

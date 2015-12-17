@@ -51,5 +51,5 @@ window.init = function(){
     return diff;
   }
 
-  setInterval(start, 1000);
+  setInterval(start, 2000);
 };

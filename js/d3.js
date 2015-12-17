@@ -8,13 +8,13 @@ window.constructVisual = (function () {
   }
 
   function makeCircleArrays(pos, neg, diff, svg, color, negColor){
+    console.log('ARE YOU WOKRING WTF')
     console.log('diff: '+diff)
     var n = neg.length,
         p = pos.length,
         val = Math.abs(diff),
         num1 = diff - n,
         num2 = val - p;
-
     if (diff >= 1) {
       if (n > 0){
         if(n - diff > 0){
@@ -81,7 +81,7 @@ window.constructVisual = (function () {
       .duration(1000)
       .attr('fill', color)
       .attr('cy', 100)
-      .attr('cx', function(d, i) { return i * 10 + 30; });
+      .attr('cx', function(d, i) { return i * 25 + 470; });
   }
 
   function updateNegativeCircles(data, svg, color){
@@ -114,7 +114,7 @@ window.constructVisual = (function () {
       .duration(1000)
       .attr('fill', color)
       .attr('cy', 100)
-      .attr('cx', function(d, i) { return i * 10 - 30; });
+      .attr('cx', function(d, i) { return i * 25 + 350; });
   }
 
   function makeLine(svg){
