@@ -74,12 +74,12 @@ gulp.task('minify-js', function() {
 gulp.task('browserify', function() {
   var files = ['./js/d3.js', './js/main.js', './js/init.js'];
   var bundler = browserify(files);
-  if (watch){
-    watchify(bundler);
-  }
+
+  watchify(bundler);
+
   var rebundle = function(){
     return bundler.bundle()
-      .pipe(source(bundle.js))
+      .pipe(source('bundle.js'))
       .pipe(gulp.dest('./build/'));
   };
   bundler.on('update', rebundle);
