@@ -34,7 +34,7 @@ window.init = function(){
       if (service.data.length > 0){
         window.constructCircles.generatePulse(location);
       }
-      service.diff = getDifference(service.data, key);
+      setIntervral(service.diff = getDifference(service.data, key, 2000));
       window.constructCircles.makeCircleArray(service.circles, service.diff, svg, service.color);
       $('#'+key+'-diff').html(service.diff);
     });
